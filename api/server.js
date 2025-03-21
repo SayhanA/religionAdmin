@@ -43,7 +43,7 @@ app.use(
   })
 );
 
-app.use(require("../routes/auth"));
+app.use("/", require("../routes/auth"));
 app.use("/religions", require("../routes/religion"));
 app.use("/admin", isAuthorized, require("../routes/adminUsers"));
 app.use("/admin/religion", isAuthorized, require("../routes/adminReligion"));
