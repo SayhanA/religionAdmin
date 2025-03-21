@@ -1,12 +1,12 @@
 const express = require("express");
 require("dotenv").config();
 const path = require("path");
+var cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const isAuthorized = require("../middleware/isAuthorized");
 const { get404 } = require("../controllers/404");
 const { default: mongoose } = require("mongoose");
-const { connectDB } = require("../config/db");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const mongoUri = process.env.MONGO_URI;
 
@@ -17,15 +17,13 @@ const store = new MongoDBStore({
   collection: "sessions",
 });
 
-// Connect to MongoDB
-// connectDB();
-
 //template engine
 app.set("view engine", "ejs");
 // app.set("views", "views");
 path.join(__dirname, "../views");
 
 //middlewares
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../public")));
