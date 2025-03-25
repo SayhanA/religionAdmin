@@ -47,6 +47,7 @@ app.use("/admin", isAuthorized, require("../routes/adminUsers"));
 app.use("/admin/religion", isAuthorized, require("../routes/adminReligion"));
 app.use("/admin/castes", isAuthorized, require("../routes/adminCast"));
 app.use("/casts", require("../routes/caste"));
+app.use("/person", require("../routes/person"));
 app.use(get404);
 app.use((err, req, res, next) => {
   console.error(err);
@@ -63,7 +64,5 @@ mongoose
     )
   )
   .catch((err) => console.error(err));
-
-module.exports = app;
 
 module.exports = app;
