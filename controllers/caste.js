@@ -2,10 +2,17 @@ const Caste = require("../models/caste");
 
 const getCasts = async (req, res, next) => {
   try {
-    const casts = await Caste.find().sort({ name: 1 });
-    res.status(200).json(casts);
+    const { id: religionId } = req.query;
+    if (!religionId) {
+      return res.status(400).json({ error: "Religion ID is required" });
+    }
+
+    const casts = await Caste.find({ religionId }).sort({ name: 1 });
+    res.status(200).json([...casts]);
   } catch (err) {
-    res.status(500).json(err);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", details: err.message });
   }
 };
 
